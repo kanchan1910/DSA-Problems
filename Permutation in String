@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) 
+    {
+        int s1len = s1.length();
+        int s2len = s2.length();
+        if(s1len > s2len)
+        {
+            return false;
+        }
+        vector<int>s1hash(26, 0);
+        vector<int>s2hash(26, 0);
+        int i = 0;
+        while(i < s1len)
+        {
+            s1hash[s1[i] - 'a']++;
+            s2hash[s2[i] - 'a']++;
+            i++;
+        }
+        while(i < s2len)
+        {
+            if(s1hash == s2hash)
+            {
+                return true;
+            }
+            s2hash[s2[i] - 'a']++;
+            s2hash[s2[i - s1len] - 'a']--;
+            i++;
+        }
+        if(s1hash == s2hash)
+        {
+            return true;
+        }
+        return false;
+    }
+};
+// tc o(max(s1len, s2len))
+// sc o(1)
