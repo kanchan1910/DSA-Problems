@@ -1,0 +1,31 @@
+
+class Solution {
+public:
+    TreeNode* fun(vector<int>& preorder, vector<int>& inorder, int& preorderindex, int l, int r, unordered_map<int, int>&m)
+    {
+        if(l > r)
+        {
+            return NULL;
+        }
+        int rootvalue = preorder[preorderindex];
+        preorderindex++;
+        TreeNode* root = new TreeNode(rootvalue);
+        int inorderposition = m[rootvalue];
+        root->left = fun(preorder, inorder, preorderindex, l, inorderposition - 1, m);
+        root->right = fun(preorder, inorder, preorderindex, inorderposition + 1, r, m);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) 
+    {
+        int n = inorder.size();
+        unordered_map<int, int>m;
+        for(int i = 0; i < n; i++)
+        {
+            m[inorder[i]] = i;
+        }
+        int preorderindex = 0;
+        return fun(preorder, inorder, preorderindex, 0, n - 1, m);
+    }
+};
+// tc o(n)
+// sc o(n)
