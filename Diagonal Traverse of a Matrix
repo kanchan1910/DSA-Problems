@@ -1,0 +1,53 @@
+class Solution {
+public:
+    vector<int> findDiagonalOrder(vector<vector<int>>& mat) 
+    {
+        int n = mat.size();
+        int m = mat[0].size();
+        // ans vector
+        vector<int>ans;
+        // means moving from top to bottom;
+        bool f = true;
+        
+        for(int i = 0; i < n; i++)
+        {
+            int sz = 1;
+            int x = i;
+            int y = 0;
+            ans.push_back(mat[x][y]);
+            while(x - 1 >= 0 && y + 1 <= m - 1)
+            {
+                x = x - 1;
+                y = y + 1;
+                ans.push_back(mat[x][y]);
+                sz++;
+            }
+            if(f == false)
+            {
+                reverse(ans.begin() + ans.size() - sz, ans.end());
+            }
+            f = !f;
+        }
+        
+        for(int j = 1; j < m; j++)
+        {
+            int sz = 1;
+            int x = n - 1;
+            int y = j;
+            ans.push_back(mat[x][y]);
+            while(x - 1 >= 0 && y + 1 <= m - 1)
+            {
+                x = x - 1;
+                y = y + 1;
+                ans.push_back(mat[x][y]);
+                sz++;
+            }
+            if(f == false)
+            {
+                reverse(ans.begin() + ans.size() - sz, ans.end());
+            }
+            f = !f;
+        }
+        return ans;
+    }
+};
