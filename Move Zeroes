@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums)
+    {
+        int n = nums.size();
+        int s = 0, i = 0;
+        while(s < n && i < n)
+        {
+            if(nums[i] == 0)
+            {
+                i++;
+            }
+            else
+            {
+                nums[s] = nums[i];
+                i++;
+                s++;
+            }
+        }
+        while(s < n)
+        {
+            nums[s] = 0;
+            s++;
+        }
+    }
+};
+
+// tc o(n)
+// sc o(1)
