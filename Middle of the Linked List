@@ -1,0 +1,40 @@
+
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) 
+    {
+        int len = 0;
+        ListNode* cur = head;
+        while(cur != NULL)
+        {
+            len++;
+            cur = cur->next;
+        }
+        int mid = len / 2 + 1;
+        int count = 0;
+        cur = head;
+        while(cur != NULL && count < mid - 1)
+        {
+            count++;
+            cur = cur->next;
+        }
+        return cur;
+    }
+};
+// tc o(n) + o(n) ~ o(n)
+// sc o(1)
+
+ListNode* middleNode(ListNode* head) 
+    {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast != NULL && fast->next != NULL)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+    
+ // tc o(n)
+// sc o(1)
