@@ -21,3 +21,39 @@ public:
   
   // tc o(n * n)
   // sc o(h)
+
+
+class Solution {
+public:
+    int fun(TreeNode* root)
+    {
+        if(root == NULL)
+        {
+            return 0;
+        }
+        int l = fun(root->left);
+        int r = fun(root->right);
+        if(l == -1 || r == -1)
+        {
+            return -1;
+        }
+        if(abs(l - r) > 1)
+        {
+            return -1;
+        }
+        else
+        {
+            return 1 + max(l, r);
+        }
+    }
+    bool isBalanced(TreeNode* root) 
+    {
+        if(root == NULL)
+        {
+            return true;
+        }
+        return fun(root) == -1 ? false : true;
+    }
+};
+// tc o(n)
+// sc o(h)
