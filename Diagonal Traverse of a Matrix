@@ -1,3 +1,5 @@
+// Leetcode : https://leetcode.com/problems/diagonal-traverse/
+
 class Solution {
 public:
     vector<int> findDiagonalOrder(vector<vector<int>>& mat) 
@@ -51,3 +53,42 @@ public:
         return ans;
     }
 };
+
+// GFG : https://practice.geeksforgeeks.org/problems/print-diagonally4331/1#
+vector<int> downwardDigonal(int n, vector<vector<int>> mat)
+	{
+        vector<int>ans;
+        for(int i = 0; i < n; i++)
+        {
+            int sz = 1;
+            int x = i;
+            int y = 0;
+            ans.push_back(mat[x][y]);
+            while(x - 1 >= 0 && y + 1 <= n - 1)
+            {
+                x = x - 1;
+                y = y + 1;
+                ans.push_back(mat[x][y]);
+                sz++;
+            }
+            reverse(ans.begin() + ans.size() - sz, ans.end());
+        }
+        for(int j = 1; j < n; j++)
+        {
+            int sz = 1;
+            int x = n - 1;
+            int y = j;
+            ans.push_back(mat[x][y]);
+            while(x - 1 >= 0 && y + 1 <= n - 1)
+            {
+                x = x - 1;
+                y = y + 1;
+                ans.push_back(mat[x][y]);
+                sz++;
+            }
+            reverse(ans.begin() + ans.size() - sz, ans.end());
+        }
+        return ans;
+	}
+    // Tc o(n * m)
+    // Sc o(1)
