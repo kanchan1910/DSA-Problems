@@ -1,0 +1,54 @@
+ListNode* removeNthFromEnd(ListNode* head, int n) 
+    {
+        int len = 0;
+        ListNode* cur = head;
+        while(cur != NULL)
+        {
+            cur = cur->next;
+            len++;
+        }
+        cur = head;
+        int node = len - n + 1;
+        int count = 0;
+        ListNode* prev = NULL;
+        while(cur != NULL && count < node - 1)
+        {
+            count++;
+            prev = cur;
+            cur = cur->next;
+        }
+        if(prev == NULL)
+        {
+            return head->next;
+        }
+        prev->next = cur->next;
+        return head;
+    }
+    // tc o(n) + o(n) ~ o(n)
+    // sc o(1)
+    
+     ListNode* removeNthFromEnd(ListNode* head, int n) 
+    {
+        ListNode* fast = head;
+        ListNode* slow = head;
+        for(int i = 0; i < n; i++)
+        {
+            fast = fast->next;
+        }
+        ListNode* prev = NULL;
+        while(fast != NULL)
+        {
+            prev = slow;
+            slow = slow->next;
+            fast = fast->next;
+        }
+        if(prev == NULL)
+        {
+            return head->next;
+        }
+        prev->next = slow->next;
+        return head;
+    }
+     // tc o(n)
+    // sc o(1)
+    
