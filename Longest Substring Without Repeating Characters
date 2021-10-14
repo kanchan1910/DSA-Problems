@@ -1,0 +1,61 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string str) 
+    {
+        int n = str.length();
+        unordered_set<char>s;
+        int start = 0;
+        int ans = 0;
+        for(int i = 0; i < n; i++)
+        {
+            if(s.find(str[i]) == s.end())
+            {
+                s.insert(str[i]);
+                ans = max(ans, i - start + 1);
+            }
+            else
+            {
+                while(s.find(str[i]) != s.end())
+                {
+                    s.erase(str[start]);
+                    start++;
+                }
+                s.insert(str[i]);
+                ans = max(ans, i - start + 1);
+            }
+        }
+        return ans;
+    }
+};
+
+// abcdefbb case
+// tc o(n ^ 2)
+// sc o(n)
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string str) 
+    {
+        int n = str.length();
+        unordered_map<char, int>m;
+        int start = 0, ans = 0;
+        for(int i = 0; i < n; i++)
+        {
+            if(m.find(str[i]) == m.end())
+            {
+                m[str[i]] = i;
+                ans = max(ans, i - start + 1);
+            }
+            else
+            {
+                // abba
+                start = max(start, m[str[i]] + 1);
+                m[str[i]] = i;
+                ans = max(ans, i - start + 1);
+            }
+        }
+        return ans;
+    }
+};
+// tc o(n) 
+// sc o(1)
