@@ -1,0 +1,88 @@
+class Solution {
+public:
+     bool isPowerOfTwo(int n) 
+    {
+         if(n <= 0)
+         {
+             return false;
+         }
+        return __builtin_popcount(n) == 1;
+    }
+};
+// tc o(number of bits in that input number)
+// sc o(1)
+    
+    =====================================================================================================================================
+    
+    // A simple method for this is to simply take the log of the number on base 2 and if you get an integer then the number is the power of 2
+    class Solution {
+public:
+    bool isPowerOfTwo(int n) 
+    {
+        if(n == 0)
+        {
+            return false;
+        }
+        return ceil(log2(n)) == floor(log2(n));
+    }
+};
+// Time Complexity: O(1)
+// Auxiliary Space: O(1)
+
+    =====================================================================================================================================
+
+
+// Another solution is to keep dividing the number by two, i.e, do n = n/2 iteratively. In any iteration, if n%2 becomes non-zero and n is not 1 then n is not a power of 2. If n becomes 1 then it is a power of 2. 
+
+
+class Solution {
+public:
+    bool isPowerOfTwo(int n) 
+    {
+        if(n == 0)
+        {
+            return false;
+        }
+        while(n != 1)
+        {
+            if(n % 2 != 0)
+            {
+                return false;
+            }
+            n /= 2;
+        }
+        return true;
+    }
+};
+// Time Complexity: O(log2n)
+
+// Auxiliary Space: O(1)
+
+  =====================================================================================================================================
+  class Solution {
+public:
+    bool isPowerOfTwo(int n) 
+    {
+        if(n <= 0)
+        {
+            return false;
+        }
+        int mask = 1;
+        int count = 0;
+        for(int i = 0; i <= 31; i++)
+        {
+            if((mask & n))
+            {
+                count++;
+            }
+            if(i != 31)
+            {
+                mask = mask << 1;
+            }
+        }
+        return count == 1 ? true : false;
+    }
+};
+
+// tc o(1)
+// sc o(1)
