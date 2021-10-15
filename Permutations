@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void fun(vector<int>& nums, int n, vector<vector<int>>& ans, int index)
+    {
+        if(index == n)
+        {
+            ans.push_back(nums);
+            return;
+        }
+        for(int i = index; i < n; i++)
+        {
+            swap(nums[index], nums[i]);
+            fun(nums, n, ans, index + 1);
+            swap(nums[index], nums[i]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) 
+    {
+        int n = nums.size();
+        vector<vector<int>>ans;
+        fun(nums, n, ans, 0);
+        return ans;
+    }
+};
+// tc o(n! * n)
+/// sc o(stack space)
