@@ -1,0 +1,59 @@
+
+class Solution {
+public:
+    TreeNode* fun(vector<int>& inorder, vector<int>& postorder, int is, int ie, int ps, int pe, unordered_map<int, int>& m)
+    {
+        if(is > ie || ps > pe)
+        {
+            return NULL;
+        }
+        int rootvalue = postorder[pe];
+        TreeNode* root = new TreeNode(rootvalue);
+        int inorderposition = m[rootvalue];
+        int numleft = inorderposition - is;
+        root->left = fun(inorder, postorder, is, inorderposition - 1, ps, ps + inorderposition - 1 - is, m);
+        root->right = fun(inorder, postorder, inorderposition + 1, ie, ps + inorderposition - is, pe - 1, m);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) 
+    {
+        int n = inorder.size();
+        unordered_map<int, int>m;
+        for(int i = 0; i < n; i++)
+        {
+            m[inorder[i]] = i;
+        }
+        return fun(inorder, postorder, 0, n - 1, 0, n - 1, m);
+    }
+};
+// tc o(n)
+// sc o(n)
+
+
+// in[]   = {4, 8, 2, 5, 1, 6, 3, 7}
+// post[] = {8, 4, 5, 2, 6, 7, 3, 1} 
+
+
+//                        root= 1
+//   right subtree       =             (3)
+//                                     5,7
+//                                     4,6
+//                                 (6)       (7)
+//                                 5,5       7,7
+//                                 4,4       5,5
+//                             (null) (null) (null)   (null)
+//                               5,4   6,5   7,6      8,7                                             
+
+
+// left subtree =  (2)
+//                 0,3
+//                 0,3
+//            (4)             (5)
+//            0,1             3,3
+//            0,1             2,2
+//        (NULL)  (8)   (null)  (null)
+//         0,-1   1,1    3,2     4,3
+//         0,-1   0,0
+//            (null)   (null)
+//             1,0    2,1         
+            
