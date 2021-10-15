@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) 
+    {
+        int n = nums.size();
+        unordered_set<int>s;
+        for(int i = 0; i < n; i++)
+        {
+            if(s.find(nums[i]) != s.end())
+            {
+                return true;
+            }
+            s.insert(nums[i]);
+        }
+        return false;
+    }
+};
+// tc o(N)
+// sc o(N)
+
+// different possible solutions
+https://leetcode.com/problems/contains-duplicate/discuss/60858/Possible-solutions.
