@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void fun(string str, vector<string>& ans, string tmp, int index)
+    {
+        if(index == str.length())
+        {
+            ans.push_back(tmp);
+            return;
+        }
+        if(isdigit(str[index]))
+        {
+            tmp += str[index];
+            fun(str, ans, tmp, index + 1);
+        }
+        else 
+        {
+            string tmp1 = tmp;
+            tmp1.push_back(tolower(str[index]));
+            string tmp2 = tmp;
+            tmp2.push_back(toupper(str[index]));
+            fun(str, ans, tmp1, index + 1);
+            fun(str, ans, tmp2, index + 1);
+        }
+    }
+    vector<string> letterCasePermutation(string str) 
+    {
+        vector<string>ans;
+        int n = str.length();
+        fun(str, ans, "", 0);
+        return ans;
+    }
+};
+
+// tc o(2 ^ n)
+// sc o(stack space)
