@@ -1,0 +1,31 @@
+
+class Solution {
+public:
+    bool fun(TreeNode* root, int& target, int sum)
+    {
+        if(root == NULL)
+        {
+            return false;
+        }
+        sum += root->val;
+        if(root->left == NULL && root->right == NULL)
+        {
+            if(sum == target)
+            {
+                return true;
+            }
+        }
+        return fun(root->left, target, sum) || fun(root->right, target, sum);
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) 
+    {
+        if(root == NULL)
+        {
+            return false;
+        }
+        return fun(root, targetSum, 0);
+    }
+};
+
+// tc o(n)
+// sc o(h)
