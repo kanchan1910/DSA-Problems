@@ -1,0 +1,78 @@
+class Solution {
+public:
+    bool isValidRows(vector<vector<char>>& board)
+    {
+        for(int i = 0; i < 9; i++)
+        {
+            unordered_set<int>s;
+            for(int j = 0; j < 9; j++)
+            {
+                if(board[i][j] == '.')
+                {
+                    continue;
+                }
+                else if(s.find(board[i][j]) != s.end())
+                {
+                    return false;
+                }
+                s.insert(board[i][j]);
+            }
+        }
+        return true;
+    }
+     bool isValidCols(vector<vector<char>>& board)
+    {
+        for(int i = 0; i < 9; i++)
+        {
+            unordered_set<int>s;
+            for(int j = 0; j < 9; j++)
+            {
+                if(board[j][i] == '.')
+                {
+                    continue;
+                }
+                else if(s.find(board[j][i]) != s.end())
+                {
+                    return false;
+                }
+                s.insert(board[j][i]);
+            }
+        }
+        return true;
+    }
+    bool isValidBoxes(vector<vector<char>>& board)
+    {
+        for(int i = 0; i < 9; i++)
+        {
+            unordered_set<int>s;
+            int r = (i / 3) * 3;
+            int c  = (i % 3) * 3;
+            for(int j = 0; j < 3; j++)
+            {
+                for(int k = 0; k < 3; k++)
+                {
+                    if(board[r + j][c + k] == '.')
+                    {
+                        continue;
+                    }
+                    else if(s.find(board[r + j][c + k]) != s.end())
+                    {
+                        return false;
+                    }
+                    s.insert(board[r + j][c +k]);
+                }
+            }
+        }
+        return true;
+    }
+    bool isValidSudoku(vector<vector<char>>& board)
+    {
+        if(isValidRows(board) == true && isValidCols(board) == true && isValidBoxes(board) == true)
+        {
+            return true;
+        }
+        return false;
+    }
+};
+// tc o(n * m)
+// sc o(1)
