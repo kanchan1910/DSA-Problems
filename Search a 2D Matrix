@@ -1,0 +1,158 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& arr, int target) 
+    {
+        int n = arr.size();
+        int m = arr[0].size();
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                if(arr[i][j] == target)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+// tc o(n * m)
+// sc o(1)
+========================================================================================================================================================================
+class Solution {
+public:
+    bool bs(vector<int>& tmp, int target)
+    {
+        int l = 0, r = tmp.size() - 1;
+        while(l <= r)
+        {
+            int mid = (l + r) / 2;
+            if(tmp[mid] == target)
+            {
+                return true;
+            }
+            else if(tmp[mid] < target)
+            {
+                l = mid + 1;
+            }
+            else
+            {
+                r = mid - 1;
+            }
+        }
+        return false;
+    }
+    bool searchMatrix(vector<vector<int>>& arr, int target) 
+    {
+        int n = arr.size();
+        int m = arr[0].size();
+        for(int i = 0; i < n; i++)
+        {
+            if(bs(arr[i], target) == true)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+// tc o(nlogm)
+// sc o(1)
+========================================================================================================================================================================
+class Solution {
+public:
+    
+    bool searchMatrix(vector<vector<int>>& arr, int target) 
+    {
+        int n = arr.size();
+        int m = arr[0].size();
+        int i = 0, j = m - 1;
+        while(i < n && j >= 0)
+        {
+            if(arr[i][j] == target)
+            {
+                return true;
+            }
+            else if(arr[i][j] < target)
+            {
+                i++;
+            }
+            else
+            {
+                j--;
+            }
+        }
+        return false;
+    }
+};
+// tc o(n + m)
+// sc o(1)
+========================================================================================================================================================================
+class Solution {
+public:
+    
+    bool searchMatrix(vector<vector<int>>& arr, int target) 
+    {
+        int n = arr.size();
+        int m = arr[0].size();
+        vector<int>tmp;
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                tmp.push_back(arr[i][j]);
+            }
+        }
+        int l = 0, r = tmp.size() - 1;
+        while(l <= r)
+        {
+            int mid = (l + r) / 2;
+            if(tmp[mid] == target)
+            {
+                return true;
+            }
+            else if(tmp[mid] < target)
+            {
+                l = mid + 1;
+            }
+            else
+            {
+                r = mid - 1;
+            }
+        }
+        return false;
+    }
+};
+// tc o(log(n * m) + n * m)
+// sc o(n * m)
+========================================================================================================================================================================
+class Solution {
+public:
+    
+    bool searchMatrix(vector<vector<int>>& arr, int target) 
+    {
+        int n = arr.size();
+        int m = arr[0].size();
+        int l = 0, r = n * m - 1;
+        while(l <= r)
+        {
+            int mid = (l + r) / 2;
+            if(arr[mid / m][mid % m] == target)
+            {
+                return true;
+            }
+            else if(arr[mid / m][mid % m] < target)
+            {
+                l = mid + 1;
+            }
+            else
+            {
+                r = mid - 1;
+            }
+        }
+        return false;
+    }
+};
+// tc o(log(n * m))
+// sc o(1)
