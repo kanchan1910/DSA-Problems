@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine)
+    {
+        int n1 = ransomNote.size();
+        int n2 = magazine.size();
+        vector<int>fre1(26, 0);
+        vector<int>fre2(26, 0);
+        for(int i = 0; i < n1; i++)
+        {
+            fre1[ransomNote[i] - 'a']++;
+        }
+        for(int i = 0; i < n2; i++)
+        {
+            fre2[magazine[i] - 'a']++;
+        }
+        for(int i = 0; i < n1; i++)
+        {
+            if(fre2[ransomNote[i] - 'a'] <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                fre2[ransomNote[i] - 'a']--;
+            }
+        }
+        return true;
+    }
+};
+// tc o(n)
+// sc o(1)
