@@ -1,0 +1,100 @@
+class MyQueue {
+public:
+    stack<int>s1, s2;
+    MyQueue() {
+        
+    }
+    
+    void push(int x) 
+    {
+        s1.push(x);
+    }
+    
+    int pop() 
+    {
+        if(!s2.empty())
+        {
+            int ans = s2.top();
+            s2.pop();
+            return ans;
+        }
+        while(!s1.empty())
+        {
+            s2.push(s1.top());
+            s1.pop();
+        }
+        int ans = s2.top();
+        s2.pop();
+        return ans;
+    }
+    
+    int peek() 
+    {
+         if(!s2.empty())
+        {
+            int ans = s2.top();
+            return ans;
+        }
+        while(!s1.empty())
+        {
+            s2.push(s1.top());
+            s1.pop();
+        }
+        int ans = s2.top();
+        return ans;
+    }
+    
+    bool empty() 
+    {
+        return s1.empty() && s2.empty();
+    }
+};
+// push o(1)
+// pop o(n)
+// peek o(n)
+// empty o(1)
+
+class MyQueue {
+public:
+    stack<int>s1, s2;
+    MyQueue() {
+        
+    }
+    
+    void push(int x) 
+    {
+        while(!s1.empty())
+        {
+            s2.push(s1.top());
+            s1.pop();
+        }
+        s1.push(x);
+        while(!s2.empty())
+        {
+            s1.push(s2.top());
+            s2.pop();
+        }
+    }
+    
+    int pop() 
+    {
+        int ans = s1.top();
+        s1.pop();
+        return ans;
+    }
+    
+    int peek() 
+    {
+        int ans = s1.top();
+        return ans;
+    }
+    
+    bool empty() 
+    {
+        return s1.empty();
+    }
+};
+// push o(n)
+// pop o(1)
+// peek o(1)
+// empty o(1)
