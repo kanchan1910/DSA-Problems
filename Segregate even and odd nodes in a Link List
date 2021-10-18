@@ -1,0 +1,27 @@
+ Node* divide(int N, Node *head)
+    {
+        Node* dummyeven = new Node(0);
+        Node* dummyodd = new Node(0);
+        Node* even = dummyeven;
+        Node* odd = dummyodd;
+        Node* cur = head;
+        while(cur != NULL)
+        {
+            if(cur->data % 2 == 0)
+            {
+                even->next = cur;
+                even = even->next;
+            }
+            else
+            {
+                odd->next = cur;
+                odd = odd->next;
+            }
+            cur = cur->next;
+        }
+        odd->next = NULL;
+        even->next = dummyodd->next;
+        return dummyeven->next;
+    }
+    // tc o(n)
+    // sc o(1)
