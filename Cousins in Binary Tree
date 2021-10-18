@@ -1,0 +1,106 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    bool isCousins(TreeNode* root, int x, int y) 
+    {
+        // same level 
+        // different parent
+        queue<pair<TreeNode*, pair<TreeNode*, int>>>q;
+        q.push({root, {NULL, 0}});
+        int anslevelx, anslevely;
+        bool f1 = false, f2 = false;
+        TreeNode* parentx;
+        TreeNode* parenty;
+        while(!q.empty())
+        {
+            int sz = q.size();
+            for(int i = 0; i < sz; i++)
+            {
+                pair<TreeNode*, pair<TreeNode*, int>>p = q.front();
+                q.pop();
+                if(p.first->val == x)
+                {
+                    f1 = true;
+                    anslevelx = p.second.second;
+                    parentx = p.second.first;
+                }
+                
+                if(p.first->val == y)
+                {
+                    f2 = true;
+                    anslevely = p.second.second;
+                    parenty = p.second.first;
+                }
+                if(p.first->left != NULL)
+                {
+                    q.push({p.first->left, {p.first, p.second.second + 1}});
+                }
+                if(p.first->right != NULL)
+                {
+                    q.push({p.first->right, {p.first, p.second.second + 1}});
+                }
+            }
+            if(f1 == true && f2 == true)
+            {
+                break;
+            }
+             if(f1 == true || f2 == true)
+            {
+                return false;
+            }
+        }
+        return anslevelx == anslevely && parentx != parenty;
+    }
+};
+
+// tc o(n)
+// sc o(n)
+
+======================================================================================================================
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void fun(TreeNode* root, unordered_map<int, pair<TreeNode*, int>>&m, int level, TreeNode* parent)
+    {
+        if(root == NULL)
+        {
+            return;
+        }
+        m[root->val] = {parent, level};
+        fun(root->left, m, level + 1, root);
+        fun(root->right, m, level + 1, root);
+    }
+    bool isCousins(TreeNode* root, int x, int y) 
+    {
+        // same level 
+        // different parent
+        unordered_map<int, pair<TreeNode*, int>>m;
+        // node, {parent, level}
+        fun(root, m, 0, NULL);
+        return m[x].second == m[y].second && m[x].first != m[y].first;
+    }
+};
+// tc o(n)
+// sc o(n)
