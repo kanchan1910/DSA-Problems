@@ -1,0 +1,54 @@
+bool isPalindrome(string str)
+{
+    for(int i = 0; i < str.length() / 2; i++)
+    {
+        if(str[i] != str[str.length() - i - 1])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+int palindromeIndex(string str) 
+{
+    int n = str.length();
+    if(isPalindrome(str) == true)
+    {
+        return -1;
+    }
+    int l = 0, r = n - 1;
+    int index = -1;
+    while(l < r)
+    {
+        if(str[l] != str[r])
+        {
+            index = l;
+            break;
+        }
+        else
+        {
+            l++;
+            r--;
+        }
+    }
+    if(isPalindrome(str.substr(0, index) + str.substr(index + 1, n)) == true)
+    {
+        return index;
+    }
+    while(l < r)
+    {
+        if(str[l] != str[r])
+        {
+            index = r;
+            break;
+        }
+        else
+        {
+            l++;
+            r--;
+        }
+    }
+    return index;
+}
+// tc o(n)
+// sc o(1)
