@@ -1,0 +1,56 @@
+vector<int> Kdistance(struct Node *root, int k)
+{
+   vector<int>ans;
+   queue<Node*>q;
+   q.push(root);
+   while(!q.empty() && k != 0)
+   {
+       k--;
+       int sz = q.size();
+       for(int i = 0; i < sz; i++)
+       {
+           Node* front = q.front();
+           q.pop();
+           if(front->left != NULL)
+           {
+               q.push(front->left);
+           }
+           if(front->right != NULL)
+           {
+               q.push(front->right);
+           }
+       }
+   }
+   while(!q.empty())
+   {
+       ans.push_back(q.front()->data);
+       q.pop();
+   }
+   return ans;
+}
+// tc o(n)
+// sc o(n)
+==============================================================================================================
+
+void preorder(Node* root, int k, vector<int>& ans)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    if(k == 0)
+    {
+        ans.push_back(root->data);
+        return;
+    }
+    preorder(root->left, k - 1, ans);
+    preorder(root->right, k - 1, ans);
+}
+vector<int> Kdistance(struct Node *root, int k)
+{
+   vector<int>ans;
+   preorder(root, k, ans);
+   return ans;
+}
+// tc o(n)
+// sc o(h)
