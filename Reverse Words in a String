@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string reverseWords(string str) 
+    {
+        int n = str.length();
+        vector<string>tmp;
+        stringstream ss(str);
+        string word;
+        while(ss >> word)
+        {
+            tmp.push_back(word);
+        }
+        reverse(tmp.begin(), tmp.end());
+        string ans = "";
+        for(int i = 0; i < tmp.size(); i++)
+        {
+            ans += tmp[i];
+            ans += " ";
+        }
+        ans.pop_back();
+        return ans;
+    }
+};
+// tc o(n)
+// sc o(n)
