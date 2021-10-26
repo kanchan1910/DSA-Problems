@@ -1,0 +1,107 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ void inorder(TreeNode* root, vector<int>& ans)
+ {
+     if(root == NULL)
+     {
+         return;
+     }
+     inorder(root->left, ans);
+     ans.push_back(root->val);
+     inorder(root->right, ans);
+ }
+int Solution::t2Sum(TreeNode* root, int target) 
+{
+    vector<int>ans;
+    inorder(root, ans);
+    int l = 0, r = ans.size() - 1;
+    while(l < r)
+    {
+        int sum = ans[l] + ans[r];
+        if(sum == target)
+        {
+            return 1;
+        }
+        else if(sum < target)
+        {
+            l++;
+        }
+        else if(sum > target)
+        {
+            r--;
+        }
+    }
+    return 0;
+}
+tc o(n)
+sc o(n)
+
+
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+int Solution::t2Sum(TreeNode* root, int target) 
+{
+    stack<TreeNode*>smin;
+    stack<TreeNode*>smax;
+    TreeNode* cur1 = root;
+    TreeNode* cur2 = root;
+    while(true)
+    {
+        while(cur1 != NULL)
+        {
+            smin.push(cur1);
+            cur1 = cur1->left;
+        }
+        while(cur2 != NULL)
+        {
+            smax.push(cur2);
+            cur2 = cur2->right;
+        }
+        if(smin.empty() || smax.empty())
+        {
+            return 0;
+        }
+        int ele1 = smin.top()->val;
+        int ele2 = smax.top()->val;
+        if(ele1 == ele2)
+        {
+            return 0;
+        }
+        int sum = ele1 + ele2;
+        if(sum == target)
+        {
+            return 1;
+        }
+        else if(sum < target)
+        {
+            cur1 = smin.top()->right;
+            smin.pop();   
+            cur2 = NULL;
+        }
+        else if(sum > target)
+        {
+            cur2 = smax.top()->left;
+            smax.pop();
+            cur1 = NULL;
+        }
+    }
+    return 0;
+}
+
+tc o(n)
+sc o(h)
