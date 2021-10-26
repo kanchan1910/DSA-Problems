@@ -1,0 +1,94 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ void inorder(TreeNode* root, vector<int>& tmp)
+ {
+     if(root == NULL)
+     {
+         return;
+     }
+     inorder(root->left, tmp);
+     tmp.push_back(root->val);
+     inorder(root->right, tmp);
+ }
+vector<int> Solution::recoverTree(TreeNode* root) 
+{
+    vector<int>tmp;
+    inorder(root, tmp);
+    int first = -1, mid = -1, last = -1;
+    for(int i = 0; i < tmp.size() - 1; i++)
+    {
+        if(tmp[i + 1] <= tmp[i])
+        {
+            if(first == -1)
+            {
+                first = tmp[i];
+                mid = tmp[i + 1];
+            }
+            else
+            {
+                last = tmp[i + 1];
+            }
+        }
+    }
+    if(last == -1)
+    {
+        return {mid, first};
+    }
+    return {last, first};
+}
+tc o(n)
+sc o(n)
+
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ void inorder(TreeNode* root, TreeNode*& first, TreeNode*& mid, TreeNode*& last, TreeNode*& prev)
+ {
+     if(root == NULL)
+     {
+         return;
+     }
+     inorder(root->left, first, mid, last, prev);
+     if(prev != NULL && root->val <= prev->val)
+     {
+         if(first == NULL)
+         {
+             first = prev;
+             mid = root;
+         }
+         else
+         {
+             last = root;
+         }
+     }
+     prev = root;
+     inorder(root->right, first, mid, last, prev);
+ }
+vector<int> Solution::recoverTree(TreeNode* root) 
+{
+    TreeNode* first = NULL; 
+    TreeNode* mid = NULL;
+    TreeNode* last = NULL;
+    TreeNode* prev = NULL;
+    inorder(root, first, mid, last, prev);
+    if(last == NULL)
+    {
+        return {mid->val, first->val};
+    }
+    return {last->val, first->val};
+}
+tc o(n)
+sc o(1)
