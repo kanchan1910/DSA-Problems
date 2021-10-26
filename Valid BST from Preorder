@@ -1,0 +1,49 @@
+int canRepresentBST(int arr[], int n) 
+    {
+        // brute force
+        int ele;
+        for(int i = 0; i < n; i++)
+        {
+            int f = 0;
+            for(int j = i + 1; j < n; j++)
+            {
+                if(arr[j] > arr[i])
+                {
+                    f = 1;
+                    ele = arr[j];
+                }
+                if(f == 1)
+                {
+                    if(arr[j] < ele)
+                    {
+                        return 0;
+                    }
+                }
+            }
+        }
+        return 1;
+    }
+    // tc o(n * n)
+    // sc o(1)
+    
+    int canRepresentBST(int arr[], int n) 
+    {
+        stack<int>s;
+        int root = INT_MIN;
+        for(int i = 0; i < n; i++)
+        {
+            if(arr[i] < root)
+            {
+                return 0;
+            }
+            while(s.size() > 0 && s.top() < arr[i])
+            {
+                root = s.top();
+                s.pop();
+            }
+            s.push(arr[i]);
+        }
+        return 1;
+    }
+    // tc o(n)
+    // sc o(n)
