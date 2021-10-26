@@ -1,0 +1,41 @@
+void inorder(TreeNode* root, vector<int>& ans)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    inorder(root->left, ans);
+    ans.push_back(root->val);
+    inorder(root->right, ans);
+}
+int Solution::kthsmallest(TreeNode* root, int k) 
+{
+    vector<int>ans;
+    inorder(root, ans);
+    return ans[k - 1];
+}
+tc o(n)
+sc o(n)
+
+void inorder(TreeNode* root, int& ans, int& k)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    inorder(root->left, ans, k);
+    k--;
+    if(k == 0)
+    {
+        ans = root->val;
+    }
+    inorder(root->right, ans, k);
+}
+int Solution::kthsmallest(TreeNode* root, int k) 
+{
+    int ans = -1;
+    inorder(root, ans, k);
+    return ans;
+}
+tc o(n)
+sc o(1)
