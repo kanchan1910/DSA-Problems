@@ -17,3 +17,23 @@ int maxSumPairWithDifferenceLessThanK(int arr[], int n, int k)
     tc o(nlogn)
     sc o(1)
     
+
+
+In java
+class Solution { 
+    public static int maxSumPairWithDifferenceLessThanK(int arr[], int n, int k) 
+    {
+        Arrays.sort(arr);
+        int ans = 0;
+        for(int i = n - 1; i >= 1; i--)
+        {
+            if((arr[i] - arr[i - 1]) < k)
+            {
+                ans += (arr[i] + arr[i - 1]);
+                i--;
+            }
+        }
+        return ans;
+
+    }
+}
