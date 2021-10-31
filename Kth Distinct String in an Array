@@ -1,0 +1,29 @@
+https://leetcode.com/contest/biweekly-contest-64/problems/kth-distinct-string-in-an-array/
+class Solution {
+public:
+    string kthDistinct(vector<string>& arr, int k) 
+    {
+        string ans = "";
+        int n = arr.size();
+        unordered_map<string, int>m;
+        for(int i = 0; i < n; i++)
+        {
+            m[arr[i]]++;
+        }
+        for(int i = 0; i < n; i++)
+        {
+            if(m[arr[i]] == 1)
+            {
+                k--;
+            }
+            if(k == 0)
+            {
+                ans = arr[i];
+                break;
+            }
+        }
+        return ans;
+    }
+};
+tc o(n)
+sc o(n)
