@@ -1,0 +1,74 @@
+https://leetcode.com/problems/two-best-non-overlapping-events/
+class Solution {
+public:
+    int maxTwoEvents(vector<vector<int>>& events) 
+    {
+        int ans = 0;
+        int n = events.size();
+        for(int i = 0; i < n; i++)
+        {
+            // choosen first element;
+            int maxi = 0;
+            for(int j = 0; j < n; j++)
+            {
+                if(j != i && events[j][0] > events[i][1])
+                {
+                    maxi = max(maxi, events[j][2]);
+                }
+            }
+            ans = max(ans, maxi + events[i][2]);
+        }
+        return ans;
+    }
+};
+tc o(n * n)
+sc o(1)
+TLE
+
+
+class Solution {
+public:
+    static bool com(vector<int>& a, vector<int>& b)
+    {
+        return a[0] < b[0];
+    }
+    int bs(int l, int r, int end_time, vector<vector<int>>& events)
+    {
+        int ans = -1;
+        while(l <= r)
+        {
+            int mid = (l + r) / 2;
+            if(events[mid][0] > end_time)
+            {
+                ans = mid;
+                r = mid - 1;
+            }
+            else
+            {
+                l = mid + 1;
+            }
+        }
+        return ans;
+    }
+    int maxTwoEvents(vector<vector<int>>& events) 
+    {
+        int ans = 0;
+        int n = events.size();
+        sort(events.begin(), events.end(), com);
+        vector<int>maxi(n, 0);
+        maxi[n - 1] = events[n - 1][2];
+        for(int i = n - 2; i >= 0; i--)
+        {
+            maxi[i] = max(events[i][2], maxi[i + 1]);
+        }
+        
+        for(int i = 0; i < n; i++)
+        {
+            int index = bs(i + 1, n - 1, events[i][1], events);
+            ans = (index == -1) ? max(ans, events[i][2]) : max(ans, events[i][2] + maxi[index]);
+        }
+        return ans;
+    }
+}; 
+tc o(nlogn)
+sc o(1)
