@@ -1,0 +1,42 @@
+https://leetcode.com/contest/weekly-contest-265/problems/find-the-minimum-and-maximum-number-of-nodes-between-critical-points/
+
+
+class Solution {
+public:
+    vector<int> nodesBetweenCriticalPoints(ListNode* head) 
+    {
+        if(head == NULL || head->next == NULL)
+        {
+            return {-1, -1};
+        }
+        // will store the indexes of the critical points
+        vector<int>tmp;
+        ListNode* cur = head->next;
+        ListNode* prev = head;
+        int index = 1;
+        while(cur->next != NULL)
+        {
+            ListNode* next = cur->next;
+            if((cur->val > prev->val && cur->val > next->val) || (cur->val < prev->val && cur->val < next->val))
+            {
+                tmp.push_back(index);
+            }
+            index++;
+            prev = cur;
+            cur = cur->next;
+        }
+        int mini = INT_MAX, maxi = INT_MIN;
+        if(tmp.size() == 0 || tmp.size() == 1)
+        {
+            return {-1, -1};
+        }
+        maxi = max(maxi, tmp[tmp.size() - 1] - tmp[0]);
+        for(int i = 1; i < tmp.size(); i++)
+        {
+            mini = min(mini, tmp[i] - tmp[i - 1]);
+        }
+        return {mini, maxi};
+    }
+};
+tc o(n)
+sc o(n)
