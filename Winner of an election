@@ -1,0 +1,26 @@
+https://practice.geeksforgeeks.org/problems/winner-of-an-election-where-votes-are-represented-as-candidate-names-1587115621/1/?company[]=Atlassian&company[]=Atlassian&page=1&query=company[]Atlassianpage1company[]Atlassian#
+
+vector<string> winner(string arr[],int n)
+    {
+        unordered_map<string, int>m;
+        for(int i = 0; i < n; i++)
+        {
+            m[arr[i]]++;
+        }
+        int max_fre = INT_MIN;
+        string name = "";
+        for(auto x: m)
+        {
+            if(max_fre < x.second)
+            {
+                max_fre = x.second;
+                name = x.first;
+            }
+            if(max_fre == x.second && x.first < name)
+            {
+                name = x.first;
+            }
+        }
+        return {name, to_string(max_fre)};
+    }
+    tc o(n) sc o(n)
