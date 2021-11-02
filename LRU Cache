@@ -1,0 +1,60 @@
+
+class LRUCache
+{
+public:
+    int size;
+    list<pair<int, int>>dll;
+    unordered_map<int, list<pair<int, int>> :: iterator>m;
+    
+    LRUCache(int capacity) 
+    {
+        size = capacity;
+    }
+    
+    int get(int key) 
+    {
+        // if key not found
+        if(m.find(key) == m.end())
+        {
+            return -1;
+        }
+        // key found
+        auto itr = m[key];
+        int value = itr->second;
+        dll.erase(itr);
+        dll.push_front({key, value});
+        m[key] = dll.begin();
+        return value;
+    }
+    
+    void put(int key, int value) 
+    {
+        // if not already in map
+        if(m.find(key) == m.end())
+        {
+            // if capacity full
+            if(dll.size() == size)
+            {
+                int least_recently_used = dll.back().first;
+                dll.pop_back();
+                dll.push_front({key, value});
+                m.erase(least_recently_used);
+                m[key] = dll.begin();
+            }
+            else
+            {
+                // simply push it at front
+                dll.push_front({key, value});
+                m[key] = dll.begin();
+            }
+        }
+        else
+        {
+            // if present in map
+            auto itr = m[key];
+            dll.erase(itr);
+            dll.push_front({key, value});
+            m[key] = dll.begin();
+        }
+    }
+};
