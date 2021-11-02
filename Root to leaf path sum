@@ -1,0 +1,20 @@
+https://practice.geeksforgeeks.org/problems/root-to-leaf-path-sum/1#
+
+bool fun(Node* root, int& sum, int& s)
+    {
+        if(root == NULL)
+        {
+            return sum == s;
+        }
+        sum += root->data;
+        bool ans =  fun(root->left, sum, s) || fun(root->right, sum, s);
+        sum -= root->data;
+        return ans;
+    }
+    bool hasPathSum(Node *root, int s) 
+    {
+        int sum = 0;
+        return fun(root, sum, s);
+    }
+    tc o(n)
+    sc o(h)
