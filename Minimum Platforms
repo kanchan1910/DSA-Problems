@@ -1,0 +1,25 @@
+int findPlatform(int arr[], int dep[], int n)
+    {
+    	int platforms = 1;
+    	sort(arr, arr + n);
+    	sort(dep, dep + n);
+    	int i = 1, j = 0;
+    	int ans = 1;
+    	while(i < n)
+    	{
+    	    if(arr[i] <= dep[j])
+    	    {
+    	        platforms++;
+    	        i++;
+    	        ans = max(ans, platforms);
+    	    }
+    	    else if(dep[j] < arr[i])
+    	    {
+    	        platforms--;
+    	        j++;
+    	    }
+    	}
+    	return ans;
+    }
+    tc o(nlogn)
+    sc o(1)
