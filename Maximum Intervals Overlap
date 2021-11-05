@@ -1,0 +1,72 @@
+https://practice.geeksforgeeks.org/problems/maximum-intervals-overlap5708/1
+
+vector<int> findMaxGuests(int en[], int ex[], int n)
+	{
+	    int mini = INT_MAX, maxi = INT_MIN;
+	    for(int i = 0; i < n; i++)
+	    {
+	        mini = min(mini, en[i]);
+	        maxi = max(maxi, ex[i]);
+	    }
+	    vector<int>tmp(maxi, 0);
+	    for(int i = 0; i < n; i++)
+	    {
+	        for(int j = en[i]; j <= ex[i]; j++)
+	        {
+	            tmp[j - 1]++;
+	            
+	        }
+	    }
+	    
+	    int ans = 0;
+	    int index = -1;
+	    for(int i = 0; i < tmp.size(); i++)
+	    {
+	        if(ans < tmp[i])
+	        {
+	            ans = tmp[i];
+	            index = i + 1;
+	        }
+	    }
+	    return {ans, index};
+	}
+  brute force solution
+  tc o(n * n)
+  sc o(1)
+  
+  
+  vector<int> findMaxGuests(int en[], int ex[], int n)
+	{
+	    if(n == 1)
+	    {
+	        return {1, en[0]};
+	    }
+	    sort(en, en + n);
+	    sort(ex, ex + n);
+	    int persons = 1;
+	    int ans = 1;
+	    int i = 1;
+	    int j = 0;
+	    int index = en[0];
+	    while(i < n)
+	    {
+	        if(en[i] <= ex[j])
+	        {
+	            persons++;
+	            if(ans < persons)
+	            {
+	                ans = persons;
+	                index = en[i];
+	            }
+	            i++;
+	        }
+	        else
+	        {
+	            persons--;
+	            j++;
+	        }
+	    }
+	    return {ans, index};
+	}
+tc o(nlogn)
+sc o(1)
