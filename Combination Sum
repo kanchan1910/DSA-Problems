@@ -1,0 +1,36 @@
+https://leetcode.com/problems/combination-sum/
+class Solution {
+public:
+    void fun(vector<int>& arr, int n, int index, int target, vector<int>& tmp, vector<vector<int>>& ans)
+    {
+        if(index == n)
+        {
+            if(target == 0)
+            {
+                ans.push_back(tmp);
+            }
+            return;
+        }
+        // pick
+        if(arr[index] <= target)
+        {
+            tmp.push_back(arr[index]);
+            fun(arr, n, index, target - arr[index], tmp, ans);
+            tmp.pop_back();
+        }
+        // not pick
+        fun(arr, n, index + 1, target, tmp, ans);
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& arr, int target) 
+    {
+        vector<vector<int>>ans;
+        vector<int>tmp;
+        int n = arr.size();
+        int index = 0;
+        fun(arr, n, index, target, tmp, ans);
+        return ans;
+    }
+};
+tc o(2 ^ n)
+sc o(tmp space + stack space)
